@@ -29,30 +29,43 @@ services:
       - docker_project
 
   yolo5:
-    image: <isha_random>/yolo5
+    image: masd109/yolo5:v1
     container_name: yolo5
     ports:
       - "8081:8081"
     networks:
       - docker_project
-    volumes:
-      - ~/.aws/credentials:/usr/src/app/credentials:ro
     environment:
-      - AWS_SHARED_CREDENTIALS_FILE=/usr/src/app/credentials
+      - AWS_SHARED_CREDENTIALS_FILE=/run/secrets/aws_credentials
+      - BUCKET_NAMUE=${BUCKET_NAME}
+      - CONNECTION_STRING=${CONNECTION_STRING}
+    secrets:
+      - aws_credentials
 
   polybot:
-    image: <isha_random>/polybot
+    image: masd109/polybot:v1devops_project
     container_name: yolo5
     ports:
       - "8443:8443"
     networks:
       - docker_project
-    volumes:
-      - ~/.aws/credentials:/usr/src/app/credentials:ro
     environment:
-      - AWS_SHARED_CREDENTIALS_FILE=/usr/src/app/credentials
+      - AWS_SHARED_CREDENTIALS_FILE=/run/secrets/aws_credentials
+      - BUCKET_NAME=${BUCKET_NAME}
+      - TELEGRAM_TOKEN_FILE=/run/secrets/telegram_token
+      - TELEGRAM_APP_URL=${TELEGRAM_APP_URL}
+      - CONNECTION_STRING=${CONNECTION_STRING}
+    secrets:
+      - aws_credentials
+      - telegram_token
 
 networks:
   docker_project:
     driver: bridge
 
+secrets:
+  aws_credentials:
+    file: ${CREDENTIALS_HOST_PATH}
+  telegram_token:
+    file: ${TELEGRAM_TOKEN_FILE}
+    
