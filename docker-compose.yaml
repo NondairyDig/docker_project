@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  mongo1:
+    image: mongo:5
+    container_name: mongo1
+    ports:
+      - "27017:27017"
+    command: 'mongod --replSet myReplicaSet --bind_ip localhost,mongo1'
+    networks:
+      - docker_project
+
+  mongo2:
+    image: mongo:5
+    container_name: mongo2
+    ports:
+      - "27018:27017"
+    command: 'mongod --replSet myReplicaSet --bind_ip localhost,mongo2'
+    networks:
+      - docker_project
+
+  mongo3:
+    image: mongo:5
+    container_name: mongo3
+    ports:
+      - "27019:27017"
+    command: 'mongod --replSet myReplicaSet --bind_ip localhost,mongo3'
+    networks:
+      - docker_project
+
+  yolo5:
+    image: <isha_random>/yolo5
+    container_name: yolo5
+    ports:
+      - "8081:8081"
+    networks:
+      - docker_project
+    volumes:
+      - ~/.aws/credentials:/usr/src/app/credentials:ro
+    environment:
+      - AWS_SHARED_CREDENTIALS_FILE=/usr/src/app/credentials
+
+  polybot:
+    image: <isha_random>/polybot
+    container_name: yolo5
+    ports:
+      - "8443:8443"
+    networks:
+      - docker_project
+    volumes:
+      - ~/.aws/credentials:/usr/src/app/credentials:ro
+    environment:
+      - AWS_SHARED_CREDENTIALS_FILE=/usr/src/app/credentials
+
+networks:
+  docker_project:
+    driver: bridge
+
