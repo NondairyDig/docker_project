@@ -7,7 +7,7 @@ app = flask.Flask(__name__)
 
 TELEGRAM_TOKEN_FILE = os.environ['TELEGRAM_TOKEN_FILE']
 with open(TELEGRAM_TOKEN_FILE, "r") as f:
-    TELEGRAM_TOKEN = f.read()
+    TELEGRAM_TOKEN = f.read().rstrip()
 TELEGRAM_APP_URL = os.environ['TELEGRAM_APP_URL']
 
 
