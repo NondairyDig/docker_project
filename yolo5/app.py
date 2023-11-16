@@ -32,6 +32,10 @@ def predict():
 
     # Receives a URL parameter representing the image to download from S3
     img_name = request.args.get('imgName')
+    folder_name = img_name.split('/')[0]
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+
     # download img_name from S3, store the local image path in original_img_path
     s3 = boto3.client('s3')
     s3.download_file(images_bucket, img_name, img_name)
