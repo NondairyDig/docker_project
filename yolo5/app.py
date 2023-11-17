@@ -32,9 +32,6 @@ def predict():
 
     # Receives a URL parameter representing the image to download from S3
     img_name = request.args.get('imgName')
-    folder_name = img_name.split('/')[0]
-    if not os.path.exists(folder_name):
-        os.makedirs(folder_name)
 
     # download img_name from S3, store the local image path in original_img_path
     s3 = boto3.client('s3')
@@ -59,7 +56,7 @@ def predict():
 
     # This is the path for the predicted image with labels
     # The predicted image typically includes bounding boxes drawn around the detected objects, along with class labels and possibly confidence scores.
-    predicted_img_path = Path(f'static/data/{prediction_id}/{original_img_path}')
+    predicted_img_path = str(Path(f'static/data/{prediction_id}/{original_img_path}'))
 
     # Uploads the predicted image (predicted_img_path) to S3 (be careful not to override the original image).
     s3.upload_file(predicted_img_path, images_bucket, predicted_img_path)

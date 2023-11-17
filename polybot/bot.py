@@ -85,11 +85,11 @@ class ObjectDetectionBot(Bot):
 
         if self.is_current_msg_photo(msg):
             photo_path = self.download_user_photo(msg)
-            
+            photo_name = photo_path.split('/')[-1]
             s3 = boto3.client('s3')
-            s3.upload_file(photo_path, images_bucket, photo_path)
+            s3.upload_file(photo_path, images_bucket, photo_name)
 
-            prediction = requests.post(f'http://yolo5:8081/predict?imgName={photo_path}').json()
+            prediction = requests.post(f'http://yolo5:8081/predict?imgName={photo_name}').json()
 
             # count each class appearances in the photo
             classes = Counter(prediction.values())
