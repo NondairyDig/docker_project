@@ -6,7 +6,13 @@ services:
     container_name: mongo1
     ports:
       - "27017:27017"
-    command: 'mongod --replSet myReplicaSet --bind_ip localhost,mongo1'
+    command: "mongod --replSet myReplicaSet --bind_ip localhost,mongo1"
+    healthcheck:
+      test: "mongosh --port 27017 --eval \"rs.initiate({_id:'myReplicaSet', members: [{_id:0, host: 'mongo1:27017'},{_id:1, host: 'mongo2:27017'},{_id:2, host: 'mongo3:27017'}]})\""
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 5s
     networks:
       - docker_project
 
@@ -15,7 +21,7 @@ services:
     container_name: mongo2
     ports:
       - "27018:27017"
-    command: 'mongod --replSet myReplicaSet --bind_ip localhost,mongo2'
+    command: "mongod --replSet myReplicaSet --bind_ip localhost,mongo2"
     networks:
       - docker_project
 
@@ -24,7 +30,7 @@ services:
     container_name: mongo3
     ports:
       - "27019:27017"
-    command: 'mongod --replSet myReplicaSet --bind_ip localhost,mongo3'
+    command: "mongod --replSet myReplicaSet --bind_ip localhost,mongo3"
     networks:
       - docker_project
 
