@@ -86,7 +86,7 @@ def predict():
 
         # store the prediction_summary in MongoDB
         collection.insert_one(prediction_summary)
-        return prediction_summary
+        return prediction_summary["labels"]
     else:
         return f'prediction: {prediction_id}/{original_img_path}. prediction result not found', 404
 
