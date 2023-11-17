@@ -92,7 +92,7 @@ class ObjectDetectionBot(Bot):
             prediction = requests.post(f'http://yolo5:8081/predict?imgName={photo_name}').json()
 
             # count each class appearances in the photo
-            classes = Counter(prediction.values())
+            classes = Counter([p["class"] for p in prediction])
 
             # prettify the classes json
             result = ""
