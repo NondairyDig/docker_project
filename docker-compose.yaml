@@ -16,7 +16,7 @@ services:
     networks:
       - docker_project
     volumes:
-      -${MONGO_DATA_PATH}/data1:/data/db:rw
+      - ${MONGO_DATA_PATH}/data1:/data/db:rw
 
   mongo2:
     image: mongo:5
@@ -27,7 +27,7 @@ services:
     networks:
       - docker_project
     volumes:
-      -${MONGO_DATA_PATH}/data2:/data/db:rw
+      - ${MONGO_DATA_PATH}/data2:/data/db:rw
 
   mongo3:
     image: mongo:5
@@ -38,7 +38,7 @@ services:
     networks:
       - docker_project
     volumes:
-      -${MONGO_DATA_PATH}/data3:/data/db:rw
+      - ${MONGO_DATA_PATH}/data3:/data/db:rw
 
   yolo5:
     image: masd109/yolo5:v1
