@@ -97,6 +97,6 @@ class ObjectDetectionBot(Bot):
             # prettify the classes json
             result = ""
             for cls in classes:
-                result += f'\n{cls}: {classes[cls]}'
+                result += f'\n{cls.capitalize()}: {classes[cls]}'
 
             self.send_text_with_quote(msg['chat']['id'], result, quoted_msg_id=msg["message_id"])
